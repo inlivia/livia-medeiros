@@ -1,11 +1,707 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TechNova — tecnologia, inteligência artificial, programação e inovação.">
+  <title>TechNova — Blog de Tecnologia</title>
+
+  <style>
+    :root {
+      --bg: #080b12;
+      --card: #101521;
+      --card-hover: #151c2b;
+      --text: #f5f7fb;
+      --muted: #9aa5b5;
+      --primary: #6c63ff;
+      --secondary: #00d4ff;
+      --border: rgba(255,255,255,.08);
+      --gradient: linear-gradient(135deg, #6c63ff, #00d4ff);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 11, 18, .85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--secondary);
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+
+    .menu a {
+      color: var(--muted);
+      font-size: .95rem;
+      transition: .25s;
+    }
+
+    .menu a:hover {
+      color: white;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: none;
+      color: white;
+      font-size: 1.7rem;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      background: #6c63ff;
+      filter: blur(160px);
+      opacity: .15;
+      top: -180px;
+      left: -100px;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 13px;
+      border: 1px solid rgba(0,212,255,.3);
+      border-radius: 30px;
+      color: var(--secondary);
+      font-size: .8rem;
+      margin-bottom: 20px;
+      background: rgba(0,212,255,.06);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      line-height: .98;
+      letter-spacing: -4px;
+      margin-bottom: 25px;
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 13px 21px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: .25s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(108,99,255,.25);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: var(--card);
+    }
+
+    /* SECTION */
+    section {
+      padding: 55px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      gap: 20px;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      letter-spacing: -1px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    /* FEATURED */
+    .featured {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 22px;
+    }
+
+    .featured-main,
+    .featured-side {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    .featured-image {
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 30% 30%, #6c63ff, transparent 30%),
+        radial-gradient(circle at 70% 70%, #00d4ff, transparent 25%),
+        #111827;
+      font-size: 5rem;
+    }
+
+    .featured-content {
+      padding: 25px;
+    }
+
+    .category {
+      color: var(--secondary);
+      font-size: .75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .featured-content h3 {
+      font-size: 1.8rem;
+      line-height: 1.15;
+      margin: 10px 0;
+    }
+
+    .featured-content p {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .side-item {
+      padding: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .side-item:last-child {
+      border-bottom: 0;
+    }
+
+    .side-item h3 {
+      margin: 7px 0;
+      line-height: 1.3;
+    }
+
+    .side-item p {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    /* ARTICLES */
+    .articles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .article {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .article:hover {
+      transform: translateY(-5px);
+      background: var(--card-hover);
+      border-color: rgba(108,99,255,.4);
+    }
+
+    .article-image {
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: linear-gradient(135deg, #161d31, #0c1220);
+    }
+
+    .article-content {
+      padding: 20px;
+    }
+
+    .article h3 {
+      margin: 8px 0;
+      line-height: 1.25;
+    }
+
+    .article p {
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      color: #6f7a8b;
+      font-size: .75rem;
+      margin-top: 17px;
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      padding: 45px;
+      border-radius: 20px;
+      background:
+        linear-gradient(rgba(16,21,33,.9), rgba(16,21,33,.9)),
+        var(--gradient);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .newsletter p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .newsletter form {
+      max-width: 500px;
+      margin: auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter input {
+      flex: 1;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #080b12;
+      color: white;
+      outline: none;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 60px;
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: .85rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 850px) {
+      .featured {
+        grid-template-columns: 1fr;
+      }
+
+      .articles {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .menu {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        padding: 25px;
+        background: #0b0f18;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .menu.active {
+        display: flex;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 65px 0 45px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .articles {
+        grid-template-columns: 1fr;
+      }
+
+      .newsletter {
+        padding: 30px 20px;
+      }
+
+      .newsletter form {
+        flex-direction: column;
+      }
+
+      .featured-image {
+        height: 220px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">Tech<span>Nova</span></a>
+
+        <button class="menu-btn" id="menuBtn">☰</button>
+
+        <ul class="menu" id="menu">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#destaques">Destaques</a></li>
+          <li><a href="#artigos">Artigos</a></li>
+          <li><a href="#newsletter">Newsletter</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-content">
+          <span class="badge">⚡ O futuro começa agora</span>
+
+          <h1>
+            Tecnologia que
+            <span class="gradient-text">transforma</span>
+            ideias.
+          </h1>
+
+          <p>
+            Notícias, inteligência artificial, programação, startups,
+            gadgets e tendências que estão moldando o futuro da tecnologia.
+          </p>
+
+          <div class="buttons">
+            <a href="#artigos" class="btn btn-primary">Explorar artigos</a>
+            <a href="#newsletter" class="btn btn-outline">Assinar newsletter</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="destaques">
+      <div class="container">
+
+        <div class="section-title">
+          <div>
+            <h2>Em destaque</h2>
+            <p>Os assuntos mais importantes do momento.</p>
+          </div>
+        </div>
+
+        <div class="featured">
+
+          <article class="featured-main">
+            <div class="featured-image">🤖</div>
+
+            <div class="featured-content">
+              <span class="category">Inteligência Artificial</span>
+
+              <h3>
+                Como a inteligência artificial está mudando a forma como trabalhamos
+              </h3>
+
+              <p>
+                Da automação de tarefas à criação de novos produtos,
+                a IA está transformando empresas e profissões em uma velocidade inédita.
+              </p>
+            </div>
+          </article>
+
+          <div class="featured-side">
+
+            <article class="side-item">
+              <span class="category">Programação</span>
+              <h3>As tecnologias que todo desenvolvedor deveria conhecer</h3>
+              <p>Um panorama das ferramentas que estão ganhando espaço no mercado.</p>
+            </article>
+
+            <article class="side-item">
+              <span class="category">Startups</span>
+              <h3>Do zero ao produto: como validar uma ideia de tecnologia</h3>
+              <p>Estratégias para transformar uma ideia em um produto real.</p>
+            </article>
+
+            <article class="side-item">
+              <span class="category">Segurança</span>
+              <h3>Boas práticas para proteger seus dados na internet</h3>
+              <p>Hábitos simples que aumentam sua segurança digital.</p>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="artigos">
+      <div class="container">
+
+        <div class="section-title">
+          <div>
+            <h2>Últimos artigos</h2>
+            <p>Conteúdo para quem gosta de tecnologia.</p>
+          </div>
+        </div>
+
+        <div class="articles">
+
+          <article class="article">
+            <div class="article-image">💻</div>
+            <div class="article-content">
+              <span class="category">Programação</span>
+              <h3>Como criar seu primeiro site moderno</h3>
+              <p>
+                HTML, CSS e JavaScript: o caminho para construir suas primeiras aplicações web.
+              </p>
+              <div class="meta">
+                <span>5 min de leitura</span>
+                <span>Hoje</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="article">
+            <div class="article-image">🧠</div>
+            <div class="article-content">
+              <span class="category">IA</span>
+              <h3>O futuro dos agentes de inteligência artificial</h3>
+              <p>
+                Entenda como agentes autônomos podem executar tarefas e automatizar processos.
+              </p>
+              <div class="meta">
+                <span>7 min de leitura</span>
+                <span>Ontem</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="article">
+            <div class="article-image">🚀</div>
+            <div class="article-content">
+              <span class="category">Startups</span>
+              <h3>Como transformar uma ideia em startup</h3>
+              <p>
+                Descubra os primeiros passos para validar um negócio baseado em tecnologia.
+              </p>
+              <div class="meta">
+                <span>6 min de leitura</span>
+                <span>2 dias</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="article">
+            <div class="article-image">🔐</div>
+            <div class="article-content">
+              <span class="category">Segurança</span>
+              <h3>5 hábitos para melhorar sua segurança digital</h3>
+              <p>
+                Pequenas mudanças podem ajudar a proteger contas, dispositivos e informações.
+              </p>
+              <div class="meta">
+                <span>4 min de leitura</span>
+                <span>3 dias</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="article">
+            <div class="article-image">📱</div>
+            <div class="article-content">
+              <span class="category">Gadgets</span>
+              <h3>O que esperar da próxima geração de dispositivos</h3>
+              <p>
+                Novos formatos e tecnologias prometem mudar nossa relação com os dispositivos.
+              </p>
+              <div class="meta">
+                <span>8 min de leitura</span>
+                <span>4 dias</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="article">
+            <div class="article-image">☁️</div>
+            <div class="article-content">
+              <span class="category">Cloud</span>
+              <h3>Por que a computação em nuvem é tão importante?</h3>
+              <p>
+                Uma introdução simples aos conceitos por trás da infraestrutura moderna.
+              </p>
+              <div class="meta">
+                <span>5 min de leitura</span>
+                <span>5 dias</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="newsletter">
+      <div class="container">
+        <div class="newsletter">
+          <h2>Receba tecnologia no seu e-mail 🚀</h2>
+
+          <p>
+            Assine gratuitamente e receba novos artigos diretamente na sua caixa de entrada.
+          </p>
+
+          <form id="newsletterForm">
+            <input
+              type="email"
+              id="email"
+              placeholder="seu@email.com"
+              required
+            >
+
+            <button class="btn btn-primary" type="submit">
+              Quero receber
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 TechNova. Feito com HTML, CSS e JavaScript.
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const menu = document.getElementById("menu");
+
+    menuBtn.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+
+    document.querySelectorAll(".menu a").forEach(link => {
+      link.addEventListener("click", () => {
+        menu.classList.remove("active");
+      });
+    });
+
+    const newsletterForm = document.getElementById("newsletterForm");
+
+    newsletterForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value;
+
+      alert(`Obrigado! O e-mail ${email} foi cadastrado.`);
+
+      newsletterForm.reset();
+    });
+  </script>
+
 </body>
 </html>
